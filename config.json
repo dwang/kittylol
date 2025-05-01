@@ -1,0 +1,82 @@
+{
+	"default": {
+		"baseUrl": "https://github.com/dwang/kittylol",
+		"searchUrlTemplate": "https://google.com/search?q={query}"
+	},
+	"commands": {
+		"aws": {
+			"baseUrl": "https://console.aws.amazon.com/"
+		},
+		"cal": {
+			"baseUrl": "https://calendar.google.com/"
+		},
+		"cf": {
+			"baseUrl": "https://dash.cloudflare.com/"
+		},
+		"crt": {
+			"baseUrl": "https://crt.sh/",
+			"searchUrlTemplate": "https://crt.sh/?q={query}"
+		},
+		"cs": {
+			"baseUrl": "https://github.com/search",
+			"searchUrlTemplate": "https://github.com/search?type=code&q={query}"
+		},
+		"ctftime": {
+			"baseUrl": "https://ctftime.org/"
+		},
+		"cyberchef": {
+			"baseUrl": "https://gchq.github.io/CyberChef/"
+		},
+		"drive": {
+			"baseUrl": "https://drive.google.com/",
+			"searchUrlTemplate": "https://drive.google.com/drive/search?q={query}"
+		},
+		"g": {
+			"baseUrl": "https://google.com/",
+			"searchUrlTemplate": "https://google.com/search?q={query}"
+		},
+		"gcp": {
+			"baseUrl": "https://console.cloud.google.com"
+		},
+		"gh": {
+			"baseUrl": "https://github.com/",
+			"searchUrlTemplate": "https://github.com/{query}"
+		},
+		"gpt": {
+			"baseUrl": "https://chatgpt.com/",
+			"searchUrlTemplate": "https://chatgpt.com/?q={query}"
+		},
+		"hn": {
+			"baseUrl": "https://news.ycombinator.com/",
+			"searchUrlTemplate": "https://hn.algolia.com/?q={query}"
+		},
+		"ip": {
+			"baseUrl": "https://icanhazip.com/"
+		},
+		"jwt": {
+			"baseUrl": "https://jwt.io/",
+			"searchUrlTemplate": "https://jwt.io/#debugger-io?token={query}"
+		},
+		"gm": {
+			"baseUrl": "https://mail.google.com/"
+		},
+		"maps": {
+			"baseUrl": "https://www.google.com/maps",
+			"searchUrlTemplate": "https://www.google.com/maps?q={query}"
+		},
+		"time": {
+			"baseUrl": "https://time.is/"
+		},
+		"ts": {
+			"baseUrl": "https://login.tailscale.com/admin/machines"
+		},
+		"vt": {
+			"baseUrl": "https://virustotal.com/",
+			"searchUrlTemplate": "https://www.virustotal.com/gui/search/{query}"
+		},
+		"yt": {
+			"baseUrl": "https://www.youtube.com/",
+			"searchUrlTemplate": "https://www.youtube.com/results?search_query={query}"
+		}
+	}
+}
