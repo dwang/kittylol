@@ -4,9 +4,6 @@
 		"searchUrlTemplate": "https://google.com/search?q={query}"
 	},
 	"commands": {
-		"aws": {
-			"baseUrl": "https://console.aws.amazon.com/"
-		},
 		"cal": {
 			"baseUrl": "https://calendar.google.com/"
 		},
