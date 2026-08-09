@@ -66,6 +66,10 @@ export const config: Config = {
 			home: 'https://github.com/search',
 			search: queryParameter('https://github.com/search?type=code', 'q'),
 		},
+		docker: {
+			home: 'https://hub.docker.com/',
+			search: queryParameter('https://hub.docker.com/search', 'q'),
+		},
 		drive: {
 			home: 'https://drive.google.com/',
 			search: queryParameter('https://drive.google.com/drive/search', 'q'),

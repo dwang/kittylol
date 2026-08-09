@@ -31,6 +31,7 @@ the configured destination.
 | `cal` | Google Calendar | — |
 | `cf` | Cloudflare dashboard | — |
 | `cs` | GitHub search | GitHub code search |
+| `docker` | Docker Hub | Container image search |
 | `drive` | Google Drive | Drive search |
 | `g` | Google | Google Search |
 | `gcp` | Google Cloud console | — |

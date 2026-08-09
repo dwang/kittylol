@@ -9,6 +9,11 @@ const searchCases = [
 		expected: 'https://github.com/search?type=code&q=Array.from',
 	},
 	{
+		command: 'docker',
+		query: 'postgres alpine',
+		expected: 'https://hub.docker.com/search?q=postgres+alpine',
+	},
+	{
 		command: 'drive',
 		query: 'quarterly plan',
 		expected: 'https://drive.google.com/drive/search?q=quarterly+plan',
