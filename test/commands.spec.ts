@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { config, fragmentParameter, path, queryParameter } from '../src/commands';
+import { config, path, queryParameter } from '../src/commands';
 
 describe('URL builders', () => {
 	it('encodes query parameter values without changing URL structure', () => {
@@ -19,13 +19,6 @@ describe('URL builders', () => {
 		expect(result.pathname).toBe('/search/https%3A%2F%2Ftarget.example%2Fa%3Fb%3Dc%23section');
 		expect(result.search).toBe('');
 		expect(result.hash).toBe('');
-	});
-
-	it('encodes fragment parameter values', () => {
-		const build = fragmentParameter('https://example.com/', 'route', 'token');
-		const result = build('value&other=value#section');
-
-		expect(result.hash).toBe('#route?token=value%26other%3Dvalue%23section');
 	});
 
 	it('can preserve intentional path separators while encoding each segment', () => {

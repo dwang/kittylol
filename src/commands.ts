@@ -32,20 +32,6 @@ export function queryParameter(value: string, parameter: string): SearchBuilder 
 	};
 }
 
-export function fragmentParameter(
-	value: string,
-	route: string,
-	parameter: string,
-): SearchBuilder {
-	const baseUrl = httpsUrl(value).href;
-
-	return (query: string) => {
-		const url = new URL(baseUrl);
-		url.hash = `${route}?${new URLSearchParams({ [parameter]: query })}`;
-		return url;
-	};
-}
-
 export function path(value: string, options: PathOptions = {}): SearchBuilder {
 	const url = httpsUrl(value);
 	if (url.search || url.hash) {
@@ -76,19 +62,9 @@ export const config: Config = {
 		cf: {
 			home: 'https://dash.cloudflare.com/',
 		},
-		crt: {
-			home: 'https://crt.sh/',
-			search: queryParameter('https://crt.sh/', 'q'),
-		},
 		cs: {
 			home: 'https://github.com/search',
 			search: queryParameter('https://github.com/search?type=code', 'q'),
-		},
-		ctftime: {
-			home: 'https://ctftime.org/',
-		},
-		cyberchef: {
-			home: 'https://gchq.github.io/CyberChef/',
 		},
 		drive: {
 			home: 'https://drive.google.com/',
@@ -119,23 +95,12 @@ export const config: Config = {
 		ip: {
 			home: 'https://icanhazip.com/',
 		},
-		jwt: {
-			home: 'https://jwt.io/',
-			search: fragmentParameter('https://jwt.io/', 'debugger-io', 'token'),
-		},
 		maps: {
 			home: 'https://www.google.com/maps',
 			search: queryParameter('https://www.google.com/maps', 'q'),
 		},
-		time: {
-			home: 'https://time.is/',
-		},
 		ts: {
 			home: 'https://login.tailscale.com/admin/machines',
-		},
-		vt: {
-			home: 'https://virustotal.com/',
-			search: path('https://www.virustotal.com/gui/search/'),
 		},
 		yt: {
 			home: 'https://www.youtube.com/',

@@ -9,11 +9,6 @@ const searchCases = [
 		expected: 'https://github.com/search?type=code&q=Array.from',
 	},
 	{
-		command: 'crt',
-		query: 'example.com',
-		expected: 'https://crt.sh/?q=example.com',
-	},
-	{
 		command: 'drive',
 		query: 'quarterly plan',
 		expected: 'https://drive.google.com/drive/search?q=quarterly+plan',
@@ -39,20 +34,9 @@ const searchCases = [
 		expected: 'https://hn.algolia.com/?q=cloudflare+workers',
 	},
 	{
-		command: 'jwt',
-		query: 'aaa.bbb.ccc',
-		expected: 'https://jwt.io/#debugger-io?token=aaa.bbb.ccc',
-	},
-	{
 		command: 'maps',
 		query: 'Seattle, WA',
 		expected: 'https://www.google.com/maps?q=Seattle%2C+WA',
-	},
-	{
-		command: 'vt',
-		query: 'https://example.com/a?b=c#section',
-		expected:
-			'https://www.virustotal.com/gui/search/https%3A%2F%2Fexample.com%2Fa%3Fb%3Dc%23section',
 	},
 	{
 		command: 'yt',
