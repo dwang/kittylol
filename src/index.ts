@@ -1,46 +1,31 @@
-import config from '../config.json';
+import { resolveRedirect } from './resolve';
 
-interface CommandConfig {
-	baseUrl: string;
-	searchUrlTemplate?: string;
-}
+const responseHeaders = {
+	'Cache-Control': 'no-store',
+	'Referrer-Policy': 'no-referrer',
+};
 
 export default {
-	async fetch(request: Request): Promise<Response> {
-		const { default: defaultConfig, commands } = config as {
-			default: {
-				baseUrl: string;
-				searchUrlTemplate: string;
-			};
-			commands: Record<string, CommandConfig>;
-		};
+	fetch(request: Request): Response {
+		if (request.method !== 'GET' && request.method !== 'HEAD') {
+			return new Response(null, {
+				status: 405,
+				headers: {
+					...responseHeaders,
+					Allow: 'GET, HEAD',
+				},
+			});
+		}
 
 		const requestUrl = new URL(request.url);
-		const rawQuery = requestUrl.searchParams.get('q')?.trim();
+		const redirectUrl = resolveRedirect(requestUrl.searchParams.get('q'));
 
-		if (!rawQuery) {
-			return Response.redirect(defaultConfig.baseUrl, 302);
-		}
-
-		const [rawCommand, ...queryParts] = rawQuery.split(/\s+/);
-		const command = rawCommand.toLowerCase();
-		const queryString = queryParts.join(' ');
-
-		const commandConfig = commands[command];
-		if (!commandConfig) {
-			const encodedQuery = encodeURIComponent(rawQuery);
-			const defaultSearchUrl = defaultConfig.searchUrlTemplate.replace('{query}', encodedQuery);
-			return Response.redirect(defaultSearchUrl, 302);
-		}
-
-		if (!queryString || !commandConfig.searchUrlTemplate) {
-			return Response.redirect(commandConfig.baseUrl, 302);
-		}
-
-		const searchUrlObj = new URL(commandConfig.searchUrlTemplate);
-		const shouldEncodeQuery = searchUrlObj.search.length > 0;
-		const processedQuery = shouldEncodeQuery ? encodeURIComponent(queryString) : queryString;
-		const redirectUrl = commandConfig.searchUrlTemplate.replace('{query}', processedQuery);
-		return Response.redirect(redirectUrl, 302);
+		return new Response(null, {
+			status: 302,
+			headers: {
+				...responseHeaders,
+				Location: redirectUrl.href,
+			},
+		});
 	},
 } satisfies ExportedHandler;
