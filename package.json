@@ -3,16 +3,20 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"predeploy": "npm run check",
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "vitest",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"typecheck": "tsc --noEmit && tsc --project test/tsconfig.json --noEmit",
+		"check": "npm run typecheck && npm test",
 		"cf-typegen": "wrangler types"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.18.8",
+		"@cloudflare/vitest-pool-workers": "^0.20.3",
 		"typescript": "^5.5.2",
 		"vitest": "~4.1.8",
-		"wrangler": "^4.114.0"
+		"wrangler": "^4.120.0"
 	}
 }
