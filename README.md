@@ -74,6 +74,8 @@ Available scripts:
 - `pnpm check` runs type checking and tests.
 - `pnpm deploy` checks the project before deploying with Wrangler.
 
+Pushes to `main` deploy automatically to Cloudflare after the CI checks pass.
+
 ## Architecture
 
 - `src/index.ts` is the HTTP adapter.
