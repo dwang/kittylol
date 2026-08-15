@@ -61,18 +61,18 @@ request URLs are not written to Workers Logs.
 Requires Node.js 22 or newer.
 
 ```sh
-npm ci
-npm run check
-npm run dev
+pnpm install --frozen-lockfile
+pnpm check
+pnpm dev
 ```
 
 Available scripts:
 
-- `npm test` runs the test suite once.
-- `npm run test:watch` starts Vitest in watch mode.
-- `npm run typecheck` checks Worker and test TypeScript projects.
-- `npm run check` runs type checking and tests.
-- `npm run deploy` checks the project before deploying with Wrangler.
+- `pnpm test` runs the test suite once.
+- `pnpm test:watch` starts Vitest in watch mode.
+- `pnpm typecheck` checks Worker and test TypeScript projects.
+- `pnpm check` runs type checking and tests.
+- `pnpm deploy` checks the project before deploying with Wrangler.
 
 ## Architecture
 

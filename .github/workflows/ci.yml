@@ -13,10 +13,9 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: pnpm/setup@v1
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run check
+          runtime: node@22
+          cache: true
+      - run: pnpm check
