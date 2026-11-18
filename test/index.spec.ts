@@ -9,7 +9,7 @@ describe('Worker HTTP adapter', () => {
 		const response = worker.fetch(new IncomingRequest('https://example.com/?q=g+test+search'));
 
 		expect(response.status).toBe(302);
-		expect(response.headers.get('Location')).toBe('https://google.com/search?q=test+search');
+		expect(response.headers.get('Location')).toBe('https://www.google.com/search?q=test+search');
 		expect(response.headers.get('Cache-Control')).toBe('no-store');
 		expect(response.headers.get('Referrer-Policy')).toBe('no-referrer');
 	});

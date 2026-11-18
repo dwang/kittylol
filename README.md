@@ -6,8 +6,8 @@ A small, stateless command router for the Chrome address bar, inspired by
 Commands support both homepage navigation and searches:
 
 ```text
-g            -> https://google.com/
-g red pandas -> https://google.com/search?q=red+pandas
+g            -> https://www.google.com/
+g red pandas -> https://www.google.com/search?q=red+pandas
 gh dwang/kittylol
 ```
 
@@ -35,7 +35,7 @@ the configured destination.
 | `drive` | Google Drive | Drive search |
 | `g` | Google | Google Search |
 | `gcp` | Google Cloud console | — |
-| `gh` | GitHub | GitHub path, such as `owner/repo` |
+| `gh` | GitHub | GitHub path (`owner/repo`, `owner/repo#123`) or search |
 | `gm` | Gmail | — |
 | `gpt` | ChatGPT | ChatGPT query |
 | `hn` | Hacker News | Algolia HN search |

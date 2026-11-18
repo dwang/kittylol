@@ -68,10 +68,34 @@ export function path(value: string, options: PathOptions = {}): SearchBuilder {
 	};
 }
 
+const githubIssuePattern = /^([^/?#\s]+)\/([^/?#\s]+)#(\d+)$/;
+
+function github(): SearchBuilder {
+	const search = queryParameter('https://github.com/search', 'q');
+	const repoPath = path('https://github.com/', { preserveSlashes: true });
+
+	return (query: string) => {
+		if (/\s/.test(query)) {
+			return search(query);
+		}
+
+		const normalized = query.replace(/^\/+/, '');
+		const match = githubIssuePattern.exec(normalized);
+		if (match) {
+			const [, owner, repo, issueNumber] = match;
+			if (owner && repo && issueNumber && owner !== '.' && owner !== '..' && repo !== '.' && repo !== '..') {
+				return new URL(`https://github.com/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/issues/${issueNumber}`);
+			}
+		}
+
+		return repoPath(query);
+	};
+}
+
 export const config: Config = defineConfig({
 	default: {
 		home: 'https://github.com/dwang/kittylol',
-		search: queryParameter('https://google.com/search', 'q'),
+		search: queryParameter('https://www.google.com/search', 'q'),
 	},
 	commands: {
 		cal: {
@@ -93,15 +117,15 @@ export const config: Config = defineConfig({
 			search: queryParameter('https://drive.google.com/drive/search', 'q'),
 		},
 		g: {
-			home: 'https://google.com/',
-			search: queryParameter('https://google.com/search', 'q'),
+			home: 'https://www.google.com/',
+			search: queryParameter('https://www.google.com/search', 'q'),
 		},
 		gcp: {
-			home: 'https://console.cloud.google.com',
+			home: 'https://console.cloud.google.com/',
 		},
 		gh: {
 			home: 'https://github.com/',
-			search: path('https://github.com/', { preserveSlashes: true }),
+			search: github(),
 		},
 		gm: {
 			home: 'https://mail.google.com/',

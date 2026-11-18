@@ -21,12 +21,47 @@ const searchCases = [
 	{
 		command: 'g',
 		query: 'hello world',
-		expected: 'https://google.com/search?q=hello+world',
+		expected: 'https://www.google.com/search?q=hello+world',
 	},
 	{
 		command: 'gh',
 		query: 'owner/repo',
 		expected: 'https://github.com/owner/repo',
+	},
+	{
+		command: 'gh',
+		query: '/owner/repo',
+		expected: 'https://github.com/owner/repo',
+	},
+	{
+		command: 'gh',
+		query: 'owner/repo#14',
+		expected: 'https://github.com/owner/repo/issues/14',
+	},
+	{
+		command: 'gh',
+		query: '/owner/repo#14',
+		expected: 'https://github.com/owner/repo/issues/14',
+	},
+	{
+		command: 'gh',
+		query: '../repo#14',
+		expected: 'https://github.com/repo%2314',
+	},
+	{
+		command: 'gh',
+		query: 'owner/repo?tab=issues#14',
+		expected: 'https://github.com/owner/repo%3Ftab%3Dissues%2314',
+	},
+	{
+		command: 'gh',
+		query: 'cloudflare workers',
+		expected: 'https://github.com/search?q=cloudflare+workers',
+	},
+	{
+		command: 'gh',
+		query: 'owner/repo/blob/main/src/index.ts#L10',
+		expected: 'https://github.com/owner/repo/blob/main/src/index.ts%23L10',
 	},
 	{
 		command: 'gpt',
@@ -58,12 +93,12 @@ describe('resolveRedirect', () => {
 
 	it('sends unknown commands to the default search engine', () => {
 		expect(resolveRedirect('nonexistent query').href).toBe(
-			'https://google.com/search?q=nonexistent+query',
+			'https://www.google.com/search?q=nonexistent+query',
 		);
 	});
 
 	it('matches command names case-insensitively', () => {
-		expect(resolveRedirect('G test search').href).toBe('https://google.com/search?q=test+search');
+		expect(resolveRedirect('G test search').href).toBe('https://www.google.com/search?q=test+search');
 	});
 
 	it('resolves every command without arguments to its homepage', () => {
@@ -73,14 +108,14 @@ describe('resolveRedirect', () => {
 	});
 
 	it('falls back to the default search engine when a command has no search destination', () => {
-		expect(resolveRedirect('cal anything').href).toBe('https://google.com/search?q=cal+anything');
-		expect(resolveRedirect('ts satisfies operator').href).toBe('https://google.com/search?q=ts+satisfies+operator');
+		expect(resolveRedirect('cal anything').href).toBe('https://www.google.com/search?q=cal+anything');
+		expect(resolveRedirect('ts satisfies operator').href).toBe('https://www.google.com/search?q=ts+satisfies+operator');
 	});
 
 	it('treats Object.prototype property names as unknown commands', () => {
-		expect(resolveRedirect('constructor').href).toBe('https://google.com/search?q=constructor');
-		expect(resolveRedirect('constructor in typescript').href).toBe('https://google.com/search?q=constructor+in+typescript');
-		expect(resolveRedirect('__proto__').href).toBe('https://google.com/search?q=__proto__');
+		expect(resolveRedirect('constructor').href).toBe('https://www.google.com/search?q=constructor');
+		expect(resolveRedirect('constructor in typescript').href).toBe('https://www.google.com/search?q=constructor+in+typescript');
+		expect(resolveRedirect('__proto__').href).toBe('https://www.google.com/search?q=__proto__');
 	});
 
 	it('preserves consecutive internal spaces in command queries', () => {
