@@ -53,8 +53,9 @@ Every query sent to kittylol passes through Cloudflare and may remain in browser
 history. Do not send passwords, bearer tokens, or other secrets through the
 Worker.
 
-Automatic Cloudflare invocation logs are disabled in `wrangler.jsonc` so routine
-request URLs are not written to Workers Logs.
+Automatic Cloudflare invocation logs are disabled and query-string redaction is
+enabled in `wrangler.jsonc` so request queries are not written to Workers
+observability data.
 
 ## Development
 
