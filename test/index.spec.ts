@@ -5,13 +5,14 @@ import worker from '../src/index';
 const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
 describe('Worker HTTP adapter', () => {
-	it('redirects GET requests and disables caching and referrers', () => {
+	it('redirects GET requests and disables caching, referrers, and indexing', () => {
 		const response = worker.fetch(new IncomingRequest('https://example.com/?q=g+test+search'));
 
 		expect(response.status).toBe(302);
 		expect(response.headers.get('Location')).toBe('https://www.google.com/search?q=test+search');
 		expect(response.headers.get('Cache-Control')).toBe('no-store');
 		expect(response.headers.get('Referrer-Policy')).toBe('no-referrer');
+		expect(response.headers.get('X-Robots-Tag')).toBe('noindex');
 	});
 
 	it('redirects HEAD requests', () => {
@@ -19,6 +20,7 @@ describe('Worker HTTP adapter', () => {
 
 		expect(response.status).toBe(302);
 		expect(response.headers.get('Location')).toBe(config.default.home);
+		expect(response.headers.get('X-Robots-Tag')).toBe('noindex');
 	});
 
 	it('rejects methods other than GET and HEAD', () => {
@@ -27,5 +29,30 @@ describe('Worker HTTP adapter', () => {
 		expect(response.status).toBe(405);
 		expect(response.headers.get('Allow')).toBe('GET, HEAD');
 		expect(response.headers.get('Cache-Control')).toBe('no-store');
+		expect(response.headers.get('X-Robots-Tag')).toBe('noindex');
+	});
+
+	it('returns cached 204 responses for /favicon.ico', () => {
+		for (const method of ['GET', 'HEAD']) {
+			const response = worker.fetch(new IncomingRequest('https://example.com/favicon.ico', { method }));
+
+			expect(response.status).toBe(204);
+			expect(response.headers.get('Location')).toBeNull();
+			expect(response.headers.get('Cache-Control')).toBe('public, max-age=86400');
+			expect(response.headers.get('Referrer-Policy')).toBe('no-referrer');
+			expect(response.headers.get('X-Robots-Tag')).toBe('noindex');
+		}
+	});
+
+	it('returns 404 for unknown non-root paths', () => {
+		for (const path of ['/unknown', '/robots.txt']) {
+			const response = worker.fetch(new IncomingRequest(`https://example.com${path}`));
+
+			expect(response.status).toBe(404);
+			expect(response.headers.get('Location')).toBeNull();
+			expect(response.headers.get('Cache-Control')).toBe('no-store');
+			expect(response.headers.get('Referrer-Policy')).toBe('no-referrer');
+			expect(response.headers.get('X-Robots-Tag')).toBe('noindex');
+		}
 	});
 });

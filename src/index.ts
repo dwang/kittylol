@@ -1,8 +1,13 @@
 import { resolveRedirect } from './resolve';
 
-const responseHeaders = {
-	'Cache-Control': 'no-store',
+const commonHeaders = {
 	'Referrer-Policy': 'no-referrer',
+	'X-Robots-Tag': 'noindex',
+};
+
+const responseHeaders = {
+	...commonHeaders,
+	'Cache-Control': 'no-store',
 };
 
 export default {
@@ -18,6 +23,23 @@ export default {
 		}
 
 		const requestUrl = new URL(request.url);
+		if (requestUrl.pathname === '/favicon.ico') {
+			return new Response(null, {
+				status: 204,
+				headers: {
+					...commonHeaders,
+					'Cache-Control': 'public, max-age=86400',
+				},
+			});
+		}
+
+		if (requestUrl.pathname !== '/') {
+			return new Response(null, {
+				status: 404,
+				headers: responseHeaders,
+			});
+		}
+
 		const redirectUrl = resolveRedirect(requestUrl.searchParams.get('q'));
 
 		return new Response(null, {
@@ -28,4 +50,4 @@ export default {
 			},
 		});
 	},
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;
