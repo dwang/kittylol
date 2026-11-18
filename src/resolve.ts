@@ -6,16 +6,23 @@ export function resolveRedirect(rawQuery: string | null | undefined): URL {
 		return new URL(config.default.home);
 	}
 
-	const [rawCommand, ...queryParts] = normalizedQuery.split(/\s+/);
-	const command = config.commands[rawCommand.toLowerCase()];
-	const query = queryParts.join(' ');
+	const whitespaceIndex = normalizedQuery.search(/\s/);
+	const rawCommand = whitespaceIndex === -1 ? normalizedQuery : normalizedQuery.slice(0, whitespaceIndex);
+	const query = whitespaceIndex === -1 ? '' : normalizedQuery.slice(whitespaceIndex).trimStart();
+
+	const commandName = rawCommand.toLowerCase();
+	const command = Object.hasOwn(config.commands, commandName) ? config.commands[commandName] : undefined;
 
 	if (!command) {
 		return config.default.search(normalizedQuery);
 	}
 
-	if (!query || !command.search) {
+	if (!query) {
 		return new URL(command.home);
+	}
+
+	if (!command.search) {
+		return config.default.search(normalizedQuery);
 	}
 
 	return command.search(query);

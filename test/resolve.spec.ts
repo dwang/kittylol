@@ -72,8 +72,19 @@ describe('resolveRedirect', () => {
 		}
 	});
 
-	it('ignores arguments for commands that do not define a search destination', () => {
-		expect(resolveRedirect('cal anything').href).toBe(config.commands.cal.home);
+	it('falls back to the default search engine when a command has no search destination', () => {
+		expect(resolveRedirect('cal anything').href).toBe('https://google.com/search?q=cal+anything');
+		expect(resolveRedirect('ts satisfies operator').href).toBe('https://google.com/search?q=ts+satisfies+operator');
+	});
+
+	it('treats Object.prototype property names as unknown commands', () => {
+		expect(resolveRedirect('constructor').href).toBe('https://google.com/search?q=constructor');
+		expect(resolveRedirect('constructor in typescript').href).toBe('https://google.com/search?q=constructor+in+typescript');
+		expect(resolveRedirect('__proto__').href).toBe('https://google.com/search?q=__proto__');
+	});
+
+	it('preserves consecutive internal spaces in command queries', () => {
+		expect(resolveRedirect('cs   "return  null"').href).toBe('https://github.com/search?type=code&q=%22return++null%22');
 	});
 
 	it.each(searchCases)('resolves $command queries', ({ command, query, expected }) => {

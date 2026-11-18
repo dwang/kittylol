@@ -22,6 +22,14 @@ function httpsUrl(value: string): URL {
 	return url;
 }
 
+export function defineConfig(value: Config): Config {
+	httpsUrl(value.default.home);
+	for (const command of Object.values(value.commands)) {
+		httpsUrl(command.home);
+	}
+	return value;
+}
+
 export function queryParameter(value: string, parameter: string): SearchBuilder {
 	const baseUrl = httpsUrl(value).href;
 
@@ -43,14 +51,24 @@ export function path(value: string, options: PathOptions = {}): SearchBuilder {
 	const baseUrl = url.href;
 
 	return (query: string) => {
-		const encodedQuery = options.preserveSlashes
-			? query.split('/').map(encodeURIComponent).join('/')
-			: encodeURIComponent(query);
-		return new URL(`${baseUrl}${encodedQuery}`);
+		if (options.preserveSlashes) {
+			const encodedSegments = query
+				.split('/')
+				.filter((segment) => segment !== '' && segment !== '.' && segment !== '..')
+				.map(encodeURIComponent)
+				.join('/');
+			return new URL(`${baseUrl}${encodedSegments}`);
+		}
+
+		if (query === '.' || query === '..') {
+			return new URL(baseUrl);
+		}
+
+		return new URL(`${baseUrl}${encodeURIComponent(query)}`);
 	};
 }
 
-export const config: Config = {
+export const config: Config = defineConfig({
 	default: {
 		home: 'https://github.com/dwang/kittylol',
 		search: queryParameter('https://google.com/search', 'q'),
@@ -111,4 +129,4 @@ export const config: Config = {
 			search: queryParameter('https://www.youtube.com/results', 'search_query'),
 		},
 	},
-};
+});
