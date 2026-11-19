@@ -37,7 +37,6 @@ the configured destination.
 | `gcp`    | Google Cloud console | —                                                      |
 | `gh`     | GitHub               | GitHub path (`owner/repo`, `owner/repo#123`) or search |
 | `gm`     | Gmail                | —                                                      |
-| `gpt`    | ChatGPT              | ChatGPT query                                          |
 | `hn`     | Hacker News          | Algolia HN search                                      |
 | `ip`     | Public IP address    | —                                                      |
 | `maps`   | Google Maps          | Maps search                                            |

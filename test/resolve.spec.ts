@@ -64,11 +64,6 @@ const searchCases = [
 		expected: 'https://github.com/owner/repo/blob/main/src/index.ts%23L10',
 	},
 	{
-		command: 'gpt',
-		query: 'write a test',
-		expected: 'https://chatgpt.com/?q=write+a+test',
-	},
-	{
 		command: 'hn',
 		query: 'cloudflare workers',
 		expected: 'https://hn.algolia.com/?q=cloudflare+workers',

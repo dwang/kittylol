@@ -130,10 +130,6 @@ export const config: Config = defineConfig({
 		gm: {
 			home: 'https://mail.google.com/',
 		},
-		gpt: {
-			home: 'https://chatgpt.com/',
-			search: queryParameter('https://chatgpt.com/', 'q'),
-		},
 		hn: {
 			home: 'https://news.ycombinator.com/',
 			search: queryParameter('https://hn.algolia.com/', 'q'),
