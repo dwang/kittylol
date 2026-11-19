@@ -26,23 +26,23 @@ the configured destination.
 
 ## Commands
 
-| Command | Homepage | Search |
-| --- | --- | --- |
-| `cal` | Google Calendar | — |
-| `cf` | Cloudflare dashboard | — |
-| `cs` | GitHub search | GitHub code search |
-| `docker` | Docker Hub | Container image search |
-| `drive` | Google Drive | Drive search |
-| `g` | Google | Google Search |
-| `gcp` | Google Cloud console | — |
-| `gh` | GitHub | GitHub path (`owner/repo`, `owner/repo#123`) or search |
-| `gm` | Gmail | — |
-| `gpt` | ChatGPT | ChatGPT query |
-| `hn` | Hacker News | Algolia HN search |
-| `ip` | Public IP address | — |
-| `maps` | Google Maps | Maps search |
-| `ts` | Tailscale machines | — |
-| `yt` | YouTube | YouTube search |
+| Command  | Homepage             | Search                                                 |
+| -------- | -------------------- | ------------------------------------------------------ |
+| `cal`    | Google Calendar      | —                                                      |
+| `cf`     | Cloudflare dashboard | —                                                      |
+| `cs`     | GitHub search        | GitHub code search                                     |
+| `docker` | Docker Hub           | Container image search                                 |
+| `drive`  | Google Drive         | Drive search                                           |
+| `g`      | Google               | Google Search                                          |
+| `gcp`    | Google Cloud console | —                                                      |
+| `gh`     | GitHub               | GitHub path (`owner/repo`, `owner/repo#123`) or search |
+| `gm`     | Gmail                | —                                                      |
+| `gpt`    | ChatGPT              | ChatGPT query                                          |
+| `hn`     | Hacker News          | Algolia HN search                                      |
+| `ip`     | Public IP address    | —                                                      |
+| `maps`   | Google Maps          | Maps search                                            |
+| `ts`     | Tailscale machines   | —                                                      |
+| `yt`     | YouTube              | YouTube search                                         |
 
 Command definitions and their URL encoding strategies live in
 [`src/commands.ts`](src/commands.ts).
@@ -69,10 +69,12 @@ pnpm dev
 
 Available scripts:
 
+- `pnpm format` formats the repository with Prettier.
+- `pnpm format:check` verifies formatting with Prettier.
 - `pnpm test` runs the test suite once.
 - `pnpm test:watch` starts Vitest in watch mode.
 - `pnpm typecheck` checks Worker and test TypeScript projects.
-- `pnpm check` runs type checking and tests.
+- `pnpm check` runs formatting, type checking, and tests.
 - `pnpm deploy` checks the project before deploying with Wrangler.
 
 Pushes to `main` deploy automatically to Cloudflare after the CI checks pass.

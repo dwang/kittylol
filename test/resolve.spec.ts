@@ -92,9 +92,7 @@ describe('resolveRedirect', () => {
 	});
 
 	it('sends unknown commands to the default search engine', () => {
-		expect(resolveRedirect('nonexistent query').href).toBe(
-			'https://www.google.com/search?q=nonexistent+query',
-		);
+		expect(resolveRedirect('nonexistent query').href).toBe('https://www.google.com/search?q=nonexistent+query');
 	});
 
 	it('matches command names case-insensitively', () => {
